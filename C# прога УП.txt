@@ -1,0 +1,151 @@
+using System;
+
+namespace SortingProgram
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введите размер массива:");
+            int n = int.Parse(Console.ReadLine());
+
+            int[] arr = new int[n];
+
+            Console.WriteLine("Заполните массив:");
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = int.Parse(Console.ReadLine());
+            }
+
+            Console.WriteLine("Выберите вид сортировки: 1 - пузырьковая сортировка, 2 - сортировка перемешиванием, 3 - сортировка выбором, 4 - сортировка вставкой");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    BubbleSort(arr);
+                    break;
+                case 2:
+                    ShakerSort(arr);
+                    break;
+                case 3:
+                    SelectionSort(arr);
+                    break;
+                case 4:
+                    InsertionSort(arr);
+                    break;
+                default:
+                    Console.WriteLine("Неверный выбор!");
+                    break;
+            }
+
+        static void BubbleSort(int[] arr)
+        {
+            int n = arr.Length;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (arr[j] > arr[j + 1])
+                    {
+                        int temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+        }
+
+        static void ShakerSort(int[] arr)
+        {
+            int left = 0;
+            int right = arr.Length - 1;
+            bool swapped = true;
+
+            while (swapped)
+            {
+                swapped = false;
+
+                for (int i = left; i < right; i++)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        int temp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = temp;
+                        swapped = true;
+                    }
+                }
+
+                if (!swapped)
+                {
+                    break;
+                }
+
+                swapped = false;
+                right--;
+
+                for (int i = right - 1; i >= left; i--)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        int temp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = temp;
+                        swapped = true;
+                    }
+                }
+
+                left++;
+            }
+        }
+
+        static void SelectionSort(int[] arr)
+        {
+            int n = arr.Length;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (arr[j] < arr[minIndex])
+                    {
+                        minIndex = j;
+                    }
+                }
+
+                int temp = arr[minIndex];
+                arr[minIndex] = arr[i];
+                arr[i] = temp;
+            }
+        }
+ 	static void InsertionSort(int[] arr)
+        {
+            int n = arr.Length;
+
+            for (int i = 1; i < n; i++)
+            {
+                int key = arr[i];
+                int j = i - 1;
+
+                while (j >= 0 && arr[j] > key)
+                {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+
+                arr[j + 1] = key;
+            }
+        }
+
+	Console.WriteLine("Отсортированный массив:");
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write(arr[i] + " ");
+            }
+       }
+    }
+}
